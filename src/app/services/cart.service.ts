@@ -35,4 +35,10 @@ export class CartService {
       {headers: this.headers}
     );
   }
+
+  clearCartItems() :Observable<any> {
+    return this._HttpClient.delete("https://ecommerce.routemisr.com/api/v1/cart",
+      {headers: this.headers}
+    );
+  }
 }

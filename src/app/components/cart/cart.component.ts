@@ -49,4 +49,14 @@ export class CartComponent implements OnInit{
       this.removeCartItem(id);
     }
   }
+
+  clearCartItems() {
+    this._CartService.clearCartItems().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.cartItems = undefined;
+      },
+      error: (err) => {console.log(err)}
+    })
+  }
 }
