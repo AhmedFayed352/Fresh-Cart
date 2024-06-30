@@ -1,0 +1,9 @@
+<div class="row g-3">
+    <div *ngFor="let brand of allBrands" class="col-md-3">
+        <a [routerLink]="['/brand/', brand._id]">
+            <div class="product p-2">
+                <img class="w-100 object-fit-cover" height="150" [src]="brand.image" alt="category-images">
+            </div>
+        </a>
+    </div>
+</div>

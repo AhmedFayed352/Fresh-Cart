@@ -1,0 +1,38 @@
+<div class="row align-items-center">
+    <div class="col-md-4">
+        <div class="p-5 border">
+            <owl-carousel-o [options]="customOptions">
+
+                <ng-container *ngFor="let productImg of productDetails?.images">
+                  <ng-template carouselSlide >
+                    <img class="w-100" [src]="productImg" [alt]="productDetails?.title">
+                </ng-template>
+                </ng-container>
+            
+            </owl-carousel-o>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="p-5">
+            <h4 class="fw-bold">{{productDetails?.title}}</h4>
+            <p class="my-3 font-sm">{{productDetails?.description}}</p>
+            <span class="fw-bold font-sm text-main">{{productDetails?.category?.name}}</span>
+            <div class="my-3">
+                <p class="mb-0 font-sm text-secondary fw-bold">Available Quantity: {{productDetails?.quantity}}</p>
+                <p class="mb-0 font-sm text-secondary fw-bold">Brand: {{productDetails?.brand?.name}}</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="fw-bold font-sm">{{ productDetails?.price }} EGP</span>
+                <div>
+                  <i class="fa-solid fa-star rating-color mx-2"></i>
+                  <span class="fw-bold font-sm">{{ productDetails?.ratingsAverage }}</span>
+                </div>
+            </div>
+            <button (click)="addItemToCart()" class="btn bg-main w-100 text-white mt-3">
+                <span class="font-sm">
+                  <i class="fa-solid fa-plus"></i> Add To Cart
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

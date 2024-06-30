@@ -1,0 +1,10 @@
+<div class="row g-3">
+    <div *ngFor="let category of allCategories" class="col-md-4">
+        <a [routerLink]="['/category/', category._id]">
+            <div class="product p-2">
+                <img class="w-100 object-fit-cover rounded-2" height="350" [src]="category.image" alt="category-images">
+                <p class="fw-bolder py-2 m-0">{{category.name}}</p>
+            </div>
+        </a>
+    </div>
+</div>

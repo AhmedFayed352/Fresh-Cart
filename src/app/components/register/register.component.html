@@ -1,0 +1,45 @@
+<div class="w-50 mx-auto my-4">
+  <h4>Register Now:</h4>
+  <p class="alert alert-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
+  <form [formGroup]="registerForm" (ngSubmit)="handleRegister()">
+    <label for="name" class="mt-1">name:</label>
+    <input type="text" name="name" id="name" class="form-control" formControlName="name" autocomplete="off">
+    <div class="text-danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.dirty">
+      <p class="my-0" *ngIf="registerForm.get('name')?.getError('required')">name is required</p>
+      <p class="my-0" *ngIf="registerForm.get('name')?.getError('minlength')">name minimum lenght is 3</p>
+      <p class="my-0" *ngIf="registerForm.get('name')?.getError('maxlength')">name maximum lenght is 20</p>
+    </div>
+
+    <label for="email" class="mt-2">email:</label>
+    <input type="email" name="email" id="email" class="form-control" formControlName="email" autocomplete="off">
+    <div class="text-danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.dirty">
+      <p class="my-0" *ngIf="registerForm.get('email')?.getError('required')">email is required</p>
+      <p class="my-0" *ngIf="registerForm.get('email')?.getError('email')">enter a valid email</p>
+    </div>
+
+    <label for="password" class="mt-2">password:</label>
+    <input type="password" name="password" id="password" class="form-control" formControlName="password">
+    <div class="text-danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">
+      <p class="my-0" *ngIf="registerForm.get('password')?.getError('required')">password is required</p>
+      <p class="my-0" *ngIf="registerForm.get('password')?.getError('pattern')">password must start with uppercase letter followed by 5 digits</p>
+    </div>
+
+    <label for="rePassword" class="mt-2">rePassword:</label>
+    <input type="password" name="rePassword" id="rePassword" class="form-control" formControlName="rePassword">
+    <p class="text-danger my-0" *ngIf="registerForm.getError('passMisMatch') && registerForm.get('password')?.dirty && registerForm.get('rePassword')?.dirty">password and rePassword doesn't match</p>
+
+    <label for="phone" class="mt-2">phone:</label>
+    <input type="tel" name="phone" id="phone" class="form-control" formControlName="phone" autocomplete="off">
+    <div class="text-danger" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.dirty">
+      <p class="my-0" *ngIf="registerForm.get('phone')?.getError('required')">phone is required</p>
+      <p class="my-0" *ngIf="registerForm.get('phone')?.getError('pattern')">enter a valid egyptian phone number</p>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn bg-main text-light mt-3" [disabled]="registerForm.invalid || isLoading">
+        <span *ngIf="!isLoading">register</span>
+        <span *ngIf="isLoading" class="fas fa-spinner fa-spin"></span>
+      </button>
+    </div>
+  </form>
+</div>

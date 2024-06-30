@@ -1,0 +1,27 @@
+<div class="w-50 mx-auto my-4">
+    <h4>Login Now:</h4>
+    <p class="alert alert-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <label for="email" class="mt-2">email:</label>
+        <input type="email" name="email" id="email" class="form-control" formControlName="email" autocomplete="off">
+        <div class="text-danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
+            <p class="my-0" *ngIf="loginForm.get('email')?.getError('required')">email is required</p>
+            <p class="my-0" *ngIf="loginForm.get('email')?.getError('email')">enter a valid email</p>
+        </div>
+
+        <label for="password" class="mt-2">password:</label>
+        <input type="password" name="password" id="password" class="form-control" formControlName="password">
+        <div class="text-danger" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty">
+            <p class="my-0" *ngIf="loginForm.get('password')?.getError('required')">password is required</p>
+            <p class="my-0" *ngIf="loginForm.get('password')?.getError('pattern')">password must start with uppercase letter followed by 5 digits</p>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center mt-3">
+            <a class="text-secondary mx-3" routerLink="/forget-password">Forget Password</a>
+            <button class="btn bg-main text-light" [disabled]="loginForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Login</span>
+                <span *ngIf="isLoading" class="fas fa-spinner fa-spin"></span>
+            </button>
+        </div>
+    </form>
+</div>
