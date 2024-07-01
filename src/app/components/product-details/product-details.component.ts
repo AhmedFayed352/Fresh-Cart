@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -10,10 +11,11 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit , OnDestroy{
 
   productId: string | null = null;
   productDetails?: IProduct;
+  arr:Subscription[] =[];
 
   customOptions: OwlOptions = {
     loop: true,
@@ -45,27 +47,33 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService){}
 
   ngOnInit(): void {
-    this._ActivatedRoute.paramMap.subscribe(
+    this.arr.push(this._ActivatedRoute.paramMap.subscribe(
       (params) =>{
         this.productId = params.get('id');
-    });
+    }));
 
     if(this.productId != null) {
-      this._ProductService.getProductDetailsById(this.productId).subscribe({
+      this.arr.push(this._ProductService.getProductDetailsById(this.productId).subscribe({
         next: (response) => {
           this.productDetails = response.data;
         },
         error: (err) => {console.log(err)}
-      })
+      }));
     }
   }
 
   addItemToCart() {
     if(this.productId != null) {
-      this._CartService.addToCart(this.productId).subscribe({
+      this.arr.push(this._CartService.addToCart(this.productId).subscribe({
         next: (response) => {console.log(response)},
         error: (err) => {console.log(err)}
-      })
+      }));
+    }
+  }
+
+  ngOnDestroy(): void {
+    for(let i =0; i<this.arr.length; i++) {
+      this.arr[i].unsubscribe();
     }
   }
 }

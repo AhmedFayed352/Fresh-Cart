@@ -27,6 +27,7 @@ import { HomeMainCarouselComponent } from './components/home-main-carousel/home-
 import { HomeCategoriesCarouselComponent } from './components/home-categories-carousel/home-categories-carousel.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductBrandComponent } from './components/product-brand/product-brand.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { ProductBrandComponent } from './components/product-brand/product-brand.
     HomeMainCarouselComponent,
     HomeCategoriesCarouselComponent,
     ProductCategoryComponent,
-    ProductBrandComponent
+    ProductBrandComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading: boolean = false;
+  onDestroying!: Subscription;
   // Custom Validation
   passwordMatch = (control : AbstractControl) : ValidationErrors | null => {
     let {password , rePassword} = control.value;
@@ -32,7 +34,7 @@ export class RegisterComponent {
   handleRegister() {
     if(this.registerForm.valid) {
       this.isLoading = true;
-      this._AuthService.register(this.registerForm.value).subscribe({
+      this.onDestroying = this._AuthService.register(this.registerForm.value).subscribe({
         next: (response) => {
           console.log(response);
           this.isLoading = false;
@@ -44,6 +46,10 @@ export class RegisterComponent {
         }
       })
     }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroying.unsubscribe();
   }
 
 }

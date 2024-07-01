@@ -40,6 +40,9 @@ a:hover {
 .font-sm {
   font-size: 14px;
 }
+.font-xsm {
+  font-size: 13px;
+}
 .text-main {
   color: var(--main-color);
 }

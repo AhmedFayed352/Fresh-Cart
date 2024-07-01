@@ -1,18 +1,20 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
+  unDestroying!: Subscription;
 
   constructor(private _AuthService:AuthService, private _Router:Router , private _CartService:CartService){}
 
@@ -24,7 +26,7 @@ export class LoginComponent {
   handleLogin() {
     if(this.loginForm.valid) {
       this.isLoading = true;
-      this._AuthService.login(this.loginForm.value).subscribe({
+      this.unDestroying = this._AuthService.login(this.loginForm.value).subscribe({
         next: (response) => 
           {
             localStorage.setItem('token', response.token);
@@ -40,5 +42,9 @@ export class LoginComponent {
           }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unDestroying.unsubscribe();
   }
 }

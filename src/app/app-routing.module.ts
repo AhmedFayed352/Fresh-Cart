@@ -16,6 +16,7 @@ import { noAuthGuard } from './Guards/no-auth.guard';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductBrandComponent } from './components/product-brand/product-brand.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'products', canActivate: [authGuard], component: ProductsComponent},
   {path: 'categories', canActivate: [authGuard], component: CategoriesComponent},
   {path: 'brands', canActivate: [authGuard], component: BrandsComponent},
+  {path: 'wishlist', canActivate: [authGuard], component: WishlistComponent},
   {path: 'product/:id', canActivate: [authGuard], component: ProductDetailsComponent},
   {path: 'category/:categoryId', canActivate: [authGuard], component: ProductCategoryComponent},
   {path: 'brand/:brandId', canActivate: [authGuard], component: ProductBrandComponent},

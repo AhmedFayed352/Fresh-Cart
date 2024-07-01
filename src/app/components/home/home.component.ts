@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -8,14 +9,15 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit , OnDestroy{
 
   allProducts: IProduct[] = [];
+  onDestroying!: Subscription;
 
   constructor(private _ProductService: ProductService){}
 
   ngOnInit() {
-    this._ProductService.getAllProducts().subscribe({
+    this.onDestroying = this._ProductService.getAllProducts().subscribe({
       next: (response) => {
         this.allProducts = response.data;
       },
@@ -25,7 +27,8 @@ export class HomeComponent implements OnInit{
     })
   }
 
-  handlePageChange(eventInfo: any) {
-    
+  ngOnDestroy(): void {
+    this.onDestroying.unsubscribe();
   }
+
 }

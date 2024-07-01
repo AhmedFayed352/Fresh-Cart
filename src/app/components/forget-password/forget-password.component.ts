@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css']
 })
-export class ForgetPasswordComponent {
+export class ForgetPasswordComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
+  unDestroying!: Subscription;
 
   constructor(private _AuthService: AuthService, private _Router: Router){}
 
@@ -21,7 +23,7 @@ export class ForgetPasswordComponent {
 
   handleForgetPassword(form: FormGroup) {
     this.isLoading = true;
-    this._AuthService.forgetPassword(form.value).subscribe({
+    this.unDestroying = this._AuthService.forgetPassword(form.value).subscribe({
       next: (response) => {
         console.log(response);
         this._Router.navigate(["/verify-reset-code"]);
@@ -32,5 +34,9 @@ export class ForgetPasswordComponent {
         this.isLoading = false;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.unDestroying.unsubscribe();
   }
 }

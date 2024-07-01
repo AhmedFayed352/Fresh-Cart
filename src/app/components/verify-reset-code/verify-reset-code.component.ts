@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './verify-reset-code.component.html',
   styleUrls: ['./verify-reset-code.component.css']
 })
-export class VerifyResetCodeComponent {
+export class VerifyResetCodeComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
+  onDestroying!: Subscription;
 
   constructor(private _AuthService: AuthService, private _Router: Router){}
 
@@ -21,7 +23,7 @@ export class VerifyResetCodeComponent {
 
   handleVerifyPasswordCode(form: FormGroup) {
     this.isLoading = true;
-    this._AuthService.verifyPasswordCode(form.value).subscribe({
+    this.onDestroying = this._AuthService.verifyPasswordCode(form.value).subscribe({
       next: (response) => {
         console.log(response);
         this._Router.navigate(['/reset-password']);
@@ -32,5 +34,9 @@ export class VerifyResetCodeComponent {
         this.isLoading = false;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroying.unsubscribe();
   }
 }
