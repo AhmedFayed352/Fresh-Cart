@@ -25,7 +25,6 @@ export class ForgetPasswordComponent implements OnDestroy{
     this.isLoading = true;
     this.unDestroying = this._AuthService.forgetPassword(form.value).subscribe({
       next: (response) => {
-        console.log(response);
         this._Router.navigate(["/verify-reset-code"]);
         this.isLoading = false;
       },

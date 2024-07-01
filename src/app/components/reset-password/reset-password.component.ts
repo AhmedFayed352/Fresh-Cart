@@ -26,7 +26,6 @@ export class ResetPasswordComponent implements OnDestroy{
     this.isLoading = true;
     this.onDestroying = this._AuthService.resetPassword(form.value).subscribe({
       next: (response) => {
-        console.log(response);
         this._Router.navigate(['/login']);
         this.isLoading = false;
       },

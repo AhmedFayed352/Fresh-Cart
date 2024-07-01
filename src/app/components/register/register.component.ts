@@ -36,7 +36,6 @@ export class RegisterComponent implements OnDestroy{
       this.isLoading = true;
       this.onDestroying = this._AuthService.register(this.registerForm.value).subscribe({
         next: (response) => {
-          console.log(response);
           this.isLoading = false;
           this._Router.navigate(['/login']);
         },

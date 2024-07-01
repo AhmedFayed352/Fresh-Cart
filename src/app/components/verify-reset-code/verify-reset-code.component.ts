@@ -25,7 +25,6 @@ export class VerifyResetCodeComponent implements OnDestroy{
     this.isLoading = true;
     this.onDestroying = this._AuthService.verifyPasswordCode(form.value).subscribe({
       next: (response) => {
-        console.log(response);
         this._Router.navigate(['/reset-password']);
         this.isLoading = false;
       },

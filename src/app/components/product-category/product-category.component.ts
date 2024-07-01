@@ -36,7 +36,7 @@ export class ProductCategoryComponent implements OnInit , OnDestroy{
 
   addItemToCart(id:string) {
     this.arr.push(this._CartService.addToCart(id).subscribe({
-      next: (response) => {console.log(response)},
+      next: (response) => {},
       error: (err) => {console.log(err)}
     }));
   }
