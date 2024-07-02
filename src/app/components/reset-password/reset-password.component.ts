@@ -13,7 +13,7 @@ export class ResetPasswordComponent implements OnDestroy{
 
   errorMessage: string = '';
   isLoading:boolean = false;
-  onDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _AuthService: AuthService, private _Router: Router){}
 
@@ -24,8 +24,9 @@ export class ResetPasswordComponent implements OnDestroy{
 
   handleResetPassword(form: FormGroup) {
     this.isLoading = true;
-    this.onDestroying = this._AuthService.resetPassword(form.value).subscribe({
+    this.unDestroying = this._AuthService.resetPassword(form.value).subscribe({
       next: (response) => {
+        response
         this._Router.navigate(['/login']);
         this.isLoading = false;
       },
@@ -37,6 +38,8 @@ export class ResetPasswordComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.onDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }

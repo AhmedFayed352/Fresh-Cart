@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent implements OnInit , OnDestroy{
 
   isLoggedUser:boolean = false;
-  unDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _AuthService: AuthService,private _Router: Router){}
 
@@ -27,6 +27,8 @@ export class NavbarComponent implements OnInit , OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.unDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }

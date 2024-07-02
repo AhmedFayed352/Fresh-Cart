@@ -33,6 +33,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
   removeWithlistItem(id :string) {
     this.arr.push(this._WishlistService.removeWithlistItem(id).subscribe({
       next: (response) => {
+        response
         this.displayWishlistItems();
       },
       error: (err) => {

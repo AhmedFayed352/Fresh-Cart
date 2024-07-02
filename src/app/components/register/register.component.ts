@@ -13,7 +13,7 @@ export class RegisterComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading: boolean = false;
-  onDestroying!: Subscription;
+  onDestroying?: Subscription;
   // Custom Validation
   passwordMatch = (control : AbstractControl) : ValidationErrors | null => {
     let {password , rePassword} = control.value;
@@ -36,6 +36,7 @@ export class RegisterComponent implements OnDestroy{
       this.isLoading = true;
       this.onDestroying = this._AuthService.register(this.registerForm.value).subscribe({
         next: (response) => {
+          response
           this.isLoading = false;
           this._Router.navigate(['/login']);
         },
@@ -48,7 +49,9 @@ export class RegisterComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.onDestroying.unsubscribe();
+    if(this.onDestroying != undefined) {
+      this.onDestroying.unsubscribe();
+    }
   }
 
 }

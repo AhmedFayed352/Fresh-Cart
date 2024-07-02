@@ -13,7 +13,7 @@ export class VerifyResetCodeComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
-  onDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _AuthService: AuthService, private _Router: Router){}
 
@@ -23,8 +23,9 @@ export class VerifyResetCodeComponent implements OnDestroy{
 
   handleVerifyPasswordCode(form: FormGroup) {
     this.isLoading = true;
-    this.onDestroying = this._AuthService.verifyPasswordCode(form.value).subscribe({
+    this.unDestroying = this._AuthService.verifyPasswordCode(form.value).subscribe({
       next: (response) => {
+        response
         this._Router.navigate(['/reset-password']);
         this.isLoading = false;
       },
@@ -36,6 +37,8 @@ export class VerifyResetCodeComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.onDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }

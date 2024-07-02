@@ -56,6 +56,7 @@ export class CartComponent implements OnInit, OnDestroy{
   clearCartItems() {
     this.arr.push(this._CartService.clearCartItems().subscribe({
       next: (response) => {
+        response
         this.cartItems = undefined;
       },
       error: (err) => {console.log(err)}

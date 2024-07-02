@@ -25,19 +25,21 @@ export class HomeCategoriesCarouselComponent implements OnInit , OnDestroy {
     autoplay:true,
     autoplayHoverPause:true
   }
-  onDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _ProductService: ProductService){}
 
   ngOnInit() {
-    this.onDestroying = this._ProductService.getAllCategories().subscribe({
+    this.unDestroying = this._ProductService.getAllCategories().subscribe({
       next: (response) => {this.allCategories = response.data},
       error: (err) => {console.log(err)}
     })
   }
 
   ngOnDestroy(): void {
-    this.onDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 
 }

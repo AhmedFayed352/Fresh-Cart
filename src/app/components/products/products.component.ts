@@ -11,12 +11,12 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductsComponent implements OnInit , OnDestroy{
 
   allProducts: IProduct[] = [];
-  onDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _ProductService: ProductService) { }
 
   ngOnInit() {
-    this.onDestroying = this._ProductService.getAllProducts().subscribe({
+    this.unDestroying = this._ProductService.getAllProducts().subscribe({
       next: (response) => {
         this.allProducts = response.data;
       },
@@ -27,7 +27,9 @@ export class ProductsComponent implements OnInit , OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.onDestroying.unsubscribe();
+    if(this.unDestroying != undefined){
+      this.unDestroying.unsubscribe();
+    }
   }
 
 }

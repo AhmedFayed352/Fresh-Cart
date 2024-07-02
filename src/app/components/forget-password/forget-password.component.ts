@@ -13,7 +13,7 @@ export class ForgetPasswordComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
-  unDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _AuthService: AuthService, private _Router: Router){}
 
@@ -25,6 +25,7 @@ export class ForgetPasswordComponent implements OnDestroy{
     this.isLoading = true;
     this.unDestroying = this._AuthService.forgetPassword(form.value).subscribe({
       next: (response) => {
+        response
         this._Router.navigate(["/verify-reset-code"]);
         this.isLoading = false;
       },
@@ -36,6 +37,8 @@ export class ForgetPasswordComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.unDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }

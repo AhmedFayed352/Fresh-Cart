@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class CategoriesComponent implements OnInit , OnDestroy {
 
   allCategories: ICategory[] = [];
-  unDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _ProductService:ProductService){}
 
@@ -23,6 +23,8 @@ export class CategoriesComponent implements OnInit , OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }

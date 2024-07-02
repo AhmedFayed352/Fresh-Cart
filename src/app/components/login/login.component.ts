@@ -14,7 +14,7 @@ export class LoginComponent implements OnDestroy{
 
   errorMessage:string = '';
   isLoading:boolean = false;
-  unDestroying!: Subscription;
+  unDestroying?: Subscription;
 
   constructor(private _AuthService:AuthService, private _Router:Router , private _CartService:CartService){}
 
@@ -45,6 +45,8 @@ export class LoginComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.unDestroying.unsubscribe();
+    if(this.unDestroying != undefined) {
+      this.unDestroying.unsubscribe();
+    }
   }
 }
