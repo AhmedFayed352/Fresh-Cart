@@ -17,7 +17,7 @@ export class ProductComponent implements OnDestroy{
 
   addItemToCart(id:string) {
     this.arr.push(this._CartService.addToCart(id).subscribe({
-      next: (response) => {console.log(response)},
+      next: (response) => {response},
       error: (err) => {console.log(err)}
     }));
   }
