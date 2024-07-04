@@ -1,44 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ICart } from '../interfaces/icart';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  headers:any = {token: localStorage.getItem("token")}
+  cartItemsNum = new BehaviorSubject<number>(0);
 
-  constructor(private _HttpClient: HttpClient) { }
+  constructor(private _HttpClient: HttpClient) { 
+    this.getUserCart().subscribe({
+      next: (response) => {
+        this.cartItemsNum.next(response.numOfCartItems);
+      }
+    })
+   }
 
   addToCart(id:string) : Observable<any>{
     return this._HttpClient.post("https://ecommerce.routemisr.com/api/v1/cart",
-      {productId: id},
-      {headers: this.headers}
-    );
+      {productId: id});
   }
 
   getUserCart() : Observable<any> {
-    return this._HttpClient.get("https://ecommerce.routemisr.com/api/v1/cart", {headers: this.headers});
+    return this._HttpClient.get("https://ecommerce.routemisr.com/api/v1/cart");
   }
 
   removeCartItem(id: string) : Observable<any>{
-    return this._HttpClient.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
-      {headers: this.headers}
-    );
+    return this._HttpClient.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`);
   }
 
   updateCartItem(id : string , count: number) : Observable<any> {
     return this._HttpClient.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, 
-      {count: count},
-      {headers: this.headers}
+      {count: count}
     );
   }
 
   clearCartItems() :Observable<any> {
-    return this._HttpClient.delete("https://ecommerce.routemisr.com/api/v1/cart",
-      {headers: this.headers}
-    );
+    return this._HttpClient.delete("https://ecommerce.routemisr.com/api/v1/cart");
+  }
+
+  onlinePayment(cartId : any , shippingAddress: any) : Observable<any> {
+    return this._HttpClient.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:4200`,
+      {shippingAddress: shippingAddress});
   }
 }

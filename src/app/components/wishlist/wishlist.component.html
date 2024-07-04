@@ -9,14 +9,15 @@
         <div class="col-md-11">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class="mb-1 fs-4">{{wishlist.title}}</p>
-                    <p class="fw-bold font-sm text-main mb-1">Price : {{wishlist.price}}</p>
-                </div>
-                <div>
-                    <button (click)="removeWithlistItem(wishlist._id)" class="btn m-0 p-0 fw-bold">
+                    <p class="mb-1 fs-4">{{wishlist.title | titleSlice: 4}}</p>
+                    <p class="fw-bold font-sm text-main mb-1">Price : {{wishlist.price | addprice}}</p>
+                    <button (click)="removeWishlistItem(wishlist._id)" class="btn m-0 p-0 fw-bold">
                         <i class="fa-regular fa-trash-can text-main"></i>
                         Remove
                     </button>
+                </div>
+                <div>
+                    <button (click)="addItemToCart(wishlist._id)" class="btn bg-main text-white mt-3 font-xsm"><i class="fa-solid fa-plus"></i>AddToCart</button>
                 </div>
             </div>
         </div>

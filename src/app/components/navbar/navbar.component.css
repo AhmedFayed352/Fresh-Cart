@@ -1,3 +1,10 @@
 .navbar-nav .nav-link.active {
     color: #0aad0a;
 }
+
+.fs-small {
+    font-size: 10px;
+}
+.fs-large { 
+    font-size: 20px;
+}

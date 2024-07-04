@@ -12,9 +12,6 @@
           <a class="nav-link" aria-current="page" routerLink="home" routerLinkActive="active">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="cart" routerLinkActive="active">Cart</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" routerLink="products" routerLinkActive="active">Products</a>
         </li>
         <li class="nav-item">
@@ -22,9 +19,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="brands" routerLinkActive="active">Brands</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="wishlist" routerLinkActive="active">WishList</a>
         </li>
       </ul>
 
@@ -45,6 +39,22 @@
         </li>
         <li *ngIf="isLoggedUser" class="nav-item">
           <a class="nav-link cursor-pointer" (click)="logOut()">SignOut</a>
+        </li>
+        <li *ngIf="isLoggedUser" class="nav-item">
+          <a routerLink="/cart" class="nav-link cursor-pointer position-relative">
+            <i class="fas fa-cart-shopping text-main fs-large"></i>
+            <span class="position-absolute top-0 start-95 translate-middle badge rounded-pill bg-main fs-small">
+              {{numOfCartItems}}
+            </span>
+          </a>
+        </li>
+        <li *ngIf="isLoggedUser" class="nav-item">
+          <a routerLink="/wishlist" class="nav-link cursor-pointer position-relative">
+            <i class="fas fa-heart text-danger fs-large"></i>
+            <span class="position-absolute top-0 start-95 translate-middle badge rounded-pill bg-danger fs-small">
+              {{numOfWishlistItems}}
+            </span>
+          </a>
         </li>
       </ul>
     </div>

@@ -1,6 +1,6 @@
 <div class="container bg-main-light p-4 border shadow-sm rounded my-5">
     <h4 class="my-3 fw-bold">Shop Cart</h4>
-    <p class="text-main font-sm fw-bold border-bottom pb-3">Total Price : {{cartItems?.totalCartPrice}}</p>
+    <p class="text-main font-sm fw-bold border-bottom pb-3">Total Price : {{cartItems?.totalCartPrice|addprice}}</p>
     <div *ngFor="let cartItem of cartItems?.products" class="row align-items-center p-2 border-bottom pb-3">
         <div class="col-md-1">
             <div>
@@ -10,8 +10,8 @@
         <div class="col-md-11">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class="mb-1 fs-4">{{cartItem.product.title}}</p>
-                    <p class="fw-bold font-sm text-main mb-1">Price : {{cartItem.price}}</p>
+                    <p class="mb-1 fs-4">{{cartItem.product.title | titleSlice: 4}}</p>
+                    <p class="fw-bold font-sm text-main mb-1">Price : {{cartItem.price|addprice}}</p>
                     <button (click)="removeCartItem(cartItem.product._id)" class="btn m-0 p-0 fw-bold">
                         <i class="fa-regular fa-trash-can text-main"></i>
                         Remove
@@ -25,7 +25,11 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-end">
-        <button (click)="clearCartItems()" class="btn bg-main text-light my-3 ">Clear Cart</button>
+    <div class="d-flex justify-content-between mt-3">
+        <a [routerLink]="['/shippingAddress',cartItems?._id]"  class="btn bg-main text-white">
+            Online Payments
+            <img src="assets/images/visa-1.svg" class="mx-1" width="30px" alt="payment image">
+        </a>
+        <button (click)="clearCartItems()" class="btn bg-main text-light">Clear Cart</button>
     </div>
 </div>

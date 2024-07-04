@@ -1,0 +1,34 @@
+<div class="w-50 mx-auto my-4">
+    <h4>Shipping Address:</h4>
+    <form [formGroup]="shippingAddressForm" (ngSubmit)="handleshippingAddress(shippingAddressForm)">
+
+        <label for="details" class="mt-2">Details:</label>
+        <input type="text" name="details" id="details" class="form-control" formControlName="details" autocomplete="off">
+
+        <div class="text-danger" *ngIf="shippingAddressForm.get('details')?.invalid && shippingAddressForm.get('details')?.dirty">
+            <p class="my-0" *ngIf="shippingAddressForm.get('details')?.getError('required')">Details is required</p>
+        </div>
+
+        <label for="phone" class="mt-2">Phone:</label>
+        <input type="tel" name="phone" id="phone" class="form-control" formControlName="phone" autocomplete="off">
+
+        <div class="text-danger" *ngIf="shippingAddressForm.get('phone')?.invalid && shippingAddressForm.get('phone')?.dirty">
+            <p class="my-0" *ngIf="shippingAddressForm.get('phone')?.getError('required')">phone is required</p>
+            <p class="my-0" *ngIf="shippingAddressForm.get('phone')?.getError('pattern')">enter a valid egyptian phone number</p>
+        </div>
+
+        <label for="city" class="mt-2">City:</label>
+        <input type="text" name="city" id="city" class="form-control" formControlName="city" autocomplete="off">
+
+        <div class="text-danger" *ngIf="shippingAddressForm.get('city')?.invalid && shippingAddressForm.get('city')?.dirty">
+            <p class="my-0" *ngIf="shippingAddressForm.get('city')?.getError('required')">City is required</p>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center mt-3">
+            <button class="btn bg-main text-light" [disabled]="shippingAddressForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Pay</span>
+                <span *ngIf="isLoading" class="fas fa-spinner fa-spin"></span>
+            </button>
+        </div>
+    </form>
+</div>

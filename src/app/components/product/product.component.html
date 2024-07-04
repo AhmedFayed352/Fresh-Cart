@@ -2,9 +2,9 @@
     <a [routerLink]="['/product/', product._id]">
     <img class="w-100" [src]="product.imageCover" [alt]="product.title" />
     <span class="fw-bold font-sm text-main">{{ product.category.name }}</span>
-    <p class="fw-bold">{{ product.title.split(" ").slice(0, 2).join(" ") }}</p>
+    <p class="fw-bold">{{ product.title | titleSlice: 2}}</p>
     <div class="d-flex justify-content-between">
-      <span class="fw-bold font-sm">{{ product.price }} EGP</span>
+      <span class="fw-bold font-sm">{{ product.price | addprice}}</span>
       <div>
         <i class="fa-solid fa-star rating-color mx-2"></i>
         <span class="fw-bold font-sm">{{ product.ratingsAverage }}</span>
@@ -13,10 +13,10 @@
   </a>
   <div class="d-flex justify-content-between">
     <div>
-      <button (click)="addItemToCart(product._id)" class="btn bg-main text-white mt-3 font-xsm"><i class="fa-solid fa-plus"></i>AddToCart</button>
+      <button (click)="addItemToCart(product._id)" class="btn bg-main text-white mt-3"><i class="fa-solid fa-plus"></i> AddToCart</button>
     </div>
     <div>
-      <button (click)="addToWishList(product._id)" class="btn bg-main text-white mt-3 font-xsm"><i class="fa-solid fa-plus"></i>AddToWishList</button>
+      <i (click)="addToWishList(product._id)" class="fas fa-heart text-danger mt-4 cursor-pointer heartico"></i>
     </div>
   </div>
 </div>

@@ -31,6 +31,7 @@ export class CartComponent implements OnInit, OnDestroy{
     this.arr.push(this._CartService.removeCartItem(id).subscribe({
       next: (response) => {
         this.cartItems = response.data;
+        this._CartService.cartItemsNum.next(response.numOfCartItems);
       },
       error: (err) => {
         console.log(err);
@@ -56,8 +57,8 @@ export class CartComponent implements OnInit, OnDestroy{
   clearCartItems() {
     this.arr.push(this._CartService.clearCartItems().subscribe({
       next: (response) => {
-        response
         this.cartItems = undefined;
+        this._CartService.cartItemsNum.next(response.numOfCartItems);
       },
       error: (err) => {console.log(err)}
     }));

@@ -17,6 +17,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductBrandComponent } from './components/product-brand/product-brand.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { ShippingAddressComponent } from './components/shipping-address/shipping-address.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -26,8 +28,10 @@ const routes: Routes = [
   {path: 'categories', canActivate: [authGuard], component: CategoriesComponent},
   {path: 'brands', canActivate: [authGuard], component: BrandsComponent},
   {path: 'wishlist', canActivate: [authGuard], component: WishlistComponent},
+  {path: 'allorders', canActivate: [authGuard], component: OrdersComponent},
   {path: 'product/:id', canActivate: [authGuard], component: ProductDetailsComponent},
   {path: 'category/:categoryId', canActivate: [authGuard], component: ProductCategoryComponent},
+  {path: 'shippingAddress/:cartId', canActivate: [authGuard], component: ShippingAddressComponent},
   {path: 'brand/:brandId', canActivate: [authGuard], component: ProductBrandComponent},
 
   {path: 'login', canActivate: [noAuthGuard], component: LoginComponent},

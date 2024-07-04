@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
+import { CartService } from 'src/app/services/cart.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
   allWishList: IProduct[] = [];
   arr: Subscription[] = [];
 
-  constructor(private _WishlistService: WishlistService){}
+  constructor(private _WishlistService: WishlistService , private _CartService: CartService){}
 
   ngOnInit(): void {
     this.displayWishlistItems();
@@ -30,16 +31,23 @@ export class WishlistComponent implements OnInit , OnDestroy{
     }));
   }
 
-  removeWithlistItem(id :string) {
+  removeWishlistItem(id :string) {
     this.arr.push(this._WishlistService.removeWithlistItem(id).subscribe({
       next: (response) => {
-        response
+        this._WishlistService.wishItemsNum.next(response.data.length);
         this.displayWishlistItems();
       },
       error: (err) => {
         console.log(err);
       }
     }));
+  }
+
+  addItemToCart(id: string) {
+    this._CartService.addToCart(id).subscribe({
+      next: (response) => {this._CartService.cartItemsNum.next(response.numOfCartItems);},
+      error: (err) => {console.log(err)}
+    })
   }
 
   ngOnDestroy(): void {

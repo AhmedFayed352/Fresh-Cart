@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
@@ -28,6 +28,11 @@ import { HomeCategoriesCarouselComponent } from './components/home-categories-ca
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductBrandComponent } from './components/product-brand/product-brand.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { AuthInterceptor } from './Interceptors/auth.interceptor';
+import { ShippingAddressComponent } from './components/shipping-address/shipping-address.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { AddpricePipe } from './Pipes/addprice.pipe';
+import { TitleSlicePipe } from './Pipes/title-slice.pipe';
 
 
 @NgModule({
@@ -52,7 +57,11 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     HomeCategoriesCarouselComponent,
     ProductCategoryComponent,
     ProductBrandComponent,
-    WishlistComponent
+    WishlistComponent,
+    ShippingAddressComponent,
+    OrdersComponent,
+    AddpricePipe,
+    TitleSlicePipe
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,13 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
     BrowserAnimationsModule,
     CarouselModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

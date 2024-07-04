@@ -17,14 +17,18 @@ export class ProductComponent implements OnDestroy{
 
   addItemToCart(id:string) {
     this.arr.push(this._CartService.addToCart(id).subscribe({
-      next: (response) => {response},
+      next: (response) => {
+        this._CartService.cartItemsNum.next(response.numOfCartItems);
+      },
       error: (err) => {console.log(err)}
     }));
   }
 
   addToWishList(id: string) {
     this.arr.push(this._WishlistService.addToWishList(id).subscribe({
-      next: (response) => {response},
+      next: (response) => {
+        this._WishlistService.wishItemsNum.next(response.data.length);
+      },
       error: (err) => {console.log(err)}
     }));
   }
