@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -33,6 +33,8 @@ import { ShippingAddressComponent } from './components/shipping-address/shipping
 import { OrdersComponent } from './components/orders/orders.component';
 import { AddpricePipe } from './Pipes/addprice.pipe';
 import { TitleSlicePipe } from './Pipes/title-slice.pipe';
+import { SearchPipe } from './Pipes/search.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { TitleSlicePipe } from './Pipes/title-slice.pipe';
     ShippingAddressComponent,
     OrdersComponent,
     AddpricePipe,
-    TitleSlicePipe
+    TitleSlicePipe,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,13 @@ import { TitleSlicePipe } from './Pipes/title-slice.pipe';
     HttpClientModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
-    CarouselModule
+    CarouselModule,
+    FormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true
+    })
   ],
   providers: [
     {

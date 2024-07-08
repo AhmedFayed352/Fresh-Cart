@@ -1,4 +1,4 @@
-<div class="container bg-main-light p-4 border shadow-sm rounded my-5">
+<div *ngIf="!isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
     <h4 class="my-3 fw-bold">Shop Cart</h4>
     <p class="text-main font-sm fw-bold border-bottom pb-3">Total Price : {{cartItems?.totalCartPrice|addprice}}</p>
     <div *ngFor="let cartItem of cartItems?.products" class="row align-items-center p-2 border-bottom pb-3">
@@ -32,4 +32,7 @@
         </a>
         <button (click)="clearCartItems()" class="btn bg-main text-light">Clear Cart</button>
     </div>
+</div>
+<div *ngIf="isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
+    <p class="text-center text-black m-0">No Cart Items Found.</p>
 </div>

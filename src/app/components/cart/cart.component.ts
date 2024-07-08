@@ -11,7 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit, OnDestroy{
 
   cartItems?: ICart;
-
+  isExist:boolean = false;
   arr: Subscription[] = [];
 
   constructor(private _CartService: CartService){}
@@ -19,6 +19,9 @@ export class CartComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.arr.push(this._CartService.getUserCart().subscribe({
       next: (response) => {
+        if(response.numOfCartItems == 0) {
+          this.isExist = true;
+        }
         this.cartItems = response.data;
       },
       error: (err) => {
@@ -28,10 +31,14 @@ export class CartComponent implements OnInit, OnDestroy{
   }
 
   removeCartItem(id: string) {
+    this.isExist = false;
     this.arr.push(this._CartService.removeCartItem(id).subscribe({
       next: (response) => {
         this.cartItems = response.data;
         this._CartService.cartItemsNum.next(response.numOfCartItems);
+        if(response.numOfCartItems == 0) {
+        this.isExist = true;
+        }
       },
       error: (err) => {
         console.log(err);
@@ -55,12 +62,15 @@ export class CartComponent implements OnInit, OnDestroy{
   }
 
   clearCartItems() {
+    this.isExist = false;
     this.arr.push(this._CartService.clearCartItems().subscribe({
       next: (response) => {
-        this.cartItems = undefined;
         this._CartService.cartItemsNum.next(response.numOfCartItems);
+        this.isExist = true;
       },
-      error: (err) => {console.log(err)}
+      error: (err) => {
+        console.log(err);
+      }
     }));
   }
 

@@ -12,6 +12,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 export class WishlistComponent implements OnInit , OnDestroy{
 
   allWishList: IProduct[] = [];
+  isExist:boolean = false;
   arr: Subscription[] = [];
 
   constructor(private _WishlistService: WishlistService , private _CartService: CartService){}
@@ -23,6 +24,9 @@ export class WishlistComponent implements OnInit , OnDestroy{
   displayWishlistItems() {
     this.arr.push(this._WishlistService.getUserWishList().subscribe({
       next: (response) => {
+        if(response.count == 0) {
+          this.isExist = true;
+        }
         this.allWishList = response.data;
       },
       error: (err) => {
@@ -32,8 +36,12 @@ export class WishlistComponent implements OnInit , OnDestroy{
   }
 
   removeWishlistItem(id :string) {
+    this.isExist = false;
     this.arr.push(this._WishlistService.removeWithlistItem(id).subscribe({
       next: (response) => {
+        if(response.count == 0) {
+          this.isExist = true;
+        }
         this._WishlistService.wishItemsNum.next(response.data.length);
         this.displayWishlistItems();
       },

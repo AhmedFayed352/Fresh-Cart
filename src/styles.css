@@ -48,6 +48,9 @@ a:hover {
 .text-main {
   color: var(--main-color);
 }
+.text-second {
+  color: var(--light-color);
+}
 .border-main {
   border: 1px solid var(--main-color);
 }

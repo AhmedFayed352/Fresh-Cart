@@ -1,4 +1,4 @@
-<div class="container bg-main-light p-4 border shadow-sm rounded my-5">
+<div *ngIf="!isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
     <h4 class="my-3 fw-bold border-bottom pb-3">My WishList</h4>
     <div *ngFor="let wishlist of allWishList" class="row align-items-center p-2 border-bottom pb-3">
         <div class="col-md-1">
@@ -17,9 +17,12 @@
                     </button>
                 </div>
                 <div>
-                    <button (click)="addItemToCart(wishlist._id)" class="btn bg-main text-white mt-3 font-xsm"><i class="fa-solid fa-plus"></i>AddToCart</button>
+                    <button (click)="addItemToCart(wishlist._id)" class="btn bg-main text-white mt-3 font-xsm"><i class="fa-solid fa-plus"></i> AddToCart</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
+    <p class="text-center text-black m-0">No WishList Items Found.</p>
 </div>

@@ -1,8 +1,9 @@
 <app-home-main-carousel></app-home-main-carousel>
 <app-home-categories-carousel></app-home-categories-carousel>
+<input [(ngModel)]="searchItem" type="text" class="form-control my-3" placeholder="Search By Product Name">
 <div class="row g-2">
     <h2 class="fw-bold">Popular Items This Season</h2>
-    <div *ngFor="let currentProduct of allProducts" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 overflow-hidden">
+    <div *ngFor="let currentProduct of allProducts|search:searchItem" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 overflow-hidden">
         <app-product [product]="currentProduct"></app-product>
     </div>
     <!-- <div class="mt-3 text-center">
