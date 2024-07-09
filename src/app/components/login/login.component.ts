@@ -16,7 +16,7 @@ export class LoginComponent implements OnDestroy{
   isLoading:boolean = false;
   unDestroying?: Subscription;
 
-  constructor(private _AuthService:AuthService, private _Router:Router , private _CartService:CartService){}
+  constructor(private _AuthService:AuthService, private _Router:Router){}
 
   loginForm:FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -33,7 +33,6 @@ export class LoginComponent implements OnDestroy{
             this._Router.navigate(["/home"]);
             this.isLoading = false;
             this._AuthService.isLoggedInSubject.next(true);
-            //this._CartService.headers = response.token;
           },
         error: (err) => 
           {

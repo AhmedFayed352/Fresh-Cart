@@ -35,6 +35,8 @@ import { AddpricePipe } from './Pipes/addprice.pipe';
 import { TitleSlicePipe } from './Pipes/title-slice.pipe';
 import { SearchPipe } from './Pipes/search.pipe';
 import { ToastrModule } from 'ngx-toastr';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptor } from './Interceptors/loader.interceptor';
 
 
 @NgModule({
@@ -64,7 +66,8 @@ import { ToastrModule } from 'ngx-toastr';
     OrdersComponent,
     AddpricePipe,
     TitleSlicePipe,
-    SearchPipe
+    SearchPipe,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +88,11 @@ import { ToastrModule } from 'ngx-toastr';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    }, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ],

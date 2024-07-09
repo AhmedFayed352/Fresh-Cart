@@ -30,11 +30,15 @@ export class NavbarComponent implements OnInit , OnDestroy{
     );
 
     this._CartService.cartItemsNum.subscribe({
-      next: (nums) => {this.numOfCartItems = nums}
+      next: (nums) => {
+        this.numOfCartItems = nums;
+      }
     });
 
     this._WishlistService.wishItemsNum.subscribe({
-      next: (nums) => {this.numOfWishlistItems = nums}
+      next: (nums) => {
+        this.numOfWishlistItems = nums;
+      }
     })
   }
 
