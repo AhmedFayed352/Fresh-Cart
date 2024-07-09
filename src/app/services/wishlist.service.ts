@@ -13,6 +13,11 @@ export class WishlistService {
     this.getUserWishList().subscribe({
       next: (response) => {
         this.wishItemsNum.next(response.count);
+      },
+      error: (err) => {
+        if(err.status == 404) {
+          this.wishItemsNum.next(0);
+        }
       }
     })
   }

@@ -1,5 +1,6 @@
+<input [(ngModel)]="searchItem" type="text" class="form-control my-3" placeholder="Search By Product Name">
 <div class="row g-2">
-    <div *ngFor="let currentProduct of allProducts" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 overflow-hidden">
+    <div *ngFor="let currentProduct of allProducts|search:searchItem" class="col-sm-6 col-md-4 col-lg-3 col-xl-2 overflow-hidden">
         <app-product [product]="currentProduct"></app-product>
     </div>
 </div>

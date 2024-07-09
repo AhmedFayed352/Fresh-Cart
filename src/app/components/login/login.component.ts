@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Subscription } from 'rxjs';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ export class LoginComponent implements OnDestroy{
   isLoading:boolean = false;
   unDestroying?: Subscription;
 
-  constructor(private _AuthService:AuthService, private _Router:Router){}
+  constructor(private _AuthService:AuthService, private _Router:Router , private _CartService:CartService , private _WishlistService:WishlistService){
+    
+  }
 
   loginForm:FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -30,6 +33,24 @@ export class LoginComponent implements OnDestroy{
         next: (response) => 
           {
             localStorage.setItem('token', response.token);
+            this._CartService.getUserCart().subscribe({
+              next: (response) => {
+                this._CartService.cartItemsNum.next(response.numOfCartItems);
+              },
+              error: (err) => {
+                if(err.status == 404) {
+                  this._CartService.cartItemsNum.next(0);
+                }
+              }
+            });
+            this._WishlistService.getUserWishList().subscribe({
+              next: (response) => {
+                this._WishlistService.wishItemsNum.next(response.count);
+              },
+              error: (err) => {
+                this._WishlistService.wishItemsNum.next(0);
+              }
+            })
             this._Router.navigate(["/home"]);
             this.isLoading = false;
             this._AuthService.isLoggedInSubject.next(true);

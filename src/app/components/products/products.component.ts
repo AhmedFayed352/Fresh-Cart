@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductsComponent implements OnInit , OnDestroy{
 
   allProducts: IProduct[] = [];
+  searchItem: string = "";
   unDestroying?: Subscription;
 
   constructor(private _ProductService: ProductService) { }

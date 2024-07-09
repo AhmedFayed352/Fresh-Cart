@@ -19,13 +19,10 @@ export class CartComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.arr.push(this._CartService.getUserCart().subscribe({
       next: (response) => {
-        if(response.numOfCartItems == 0) {
-          this.isExist = true;
-        }
         this.cartItems = response.data;
       },
       error: (err) => {
-        console.log(err);
+        this.isExist = true;
       }
     }));
   }
@@ -65,7 +62,7 @@ export class CartComponent implements OnInit, OnDestroy{
     this.isExist = false;
     this.arr.push(this._CartService.clearCartItems().subscribe({
       next: (response) => {
-        this._CartService.cartItemsNum.next(response.numOfCartItems);
+        this._CartService.cartItemsNum.next(0);
         this.isExist = true;
       },
       error: (err) => {

@@ -13,6 +13,11 @@ export class CartService {
     this.getUserCart().subscribe({
       next: (response) => {
         this.cartItemsNum.next(response.numOfCartItems);
+      },
+      error: (err) => {
+        if(err.status == 404) {
+          this.cartItemsNum.next(0);
+        }
       }
     })
    }
