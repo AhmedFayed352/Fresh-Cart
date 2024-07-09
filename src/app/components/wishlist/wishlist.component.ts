@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
 import { CartService } from 'src/app/services/cart.service';
@@ -15,7 +16,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
   isExist:boolean = false;
   arr: Subscription[] = [];
 
-  constructor(private _WishlistService: WishlistService , private _CartService: CartService){}
+  constructor(private _WishlistService: WishlistService , private _CartService: CartService , private _toastr:ToastrService){}
 
   ngOnInit(): void {
     this.displayWishlistItems();
@@ -53,7 +54,10 @@ export class WishlistComponent implements OnInit , OnDestroy{
 
   addItemToCart(id: string) {
     this._CartService.addToCart(id).subscribe({
-      next: (response) => {this._CartService.cartItemsNum.next(response.numOfCartItems);},
+      next: (response) => {
+        this._CartService.cartItemsNum.next(response.numOfCartItems);
+        this._toastr.success("Added to Cart" , "Successfully");
+      },
       error: (err) => {console.log(err)}
     })
   }
