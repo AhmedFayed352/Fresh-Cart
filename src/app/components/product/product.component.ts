@@ -13,6 +13,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 export class ProductComponent implements OnDestroy{
   @Input() product!: IProduct;
   arr:Subscription[] = [];
+  // proId:boolean = false;
 
   constructor(private _CartService:CartService, private _WishlistService:WishlistService , private toastr:ToastrService){}
 
@@ -34,6 +35,9 @@ export class ProductComponent implements OnDestroy{
       next: (response) => {
         this._WishlistService.wishItemsNum.next(response.data.length);
         this.toastr.success('Added To WishList' ,'Successfully');
+        // if(response.data.includes(id)) {
+        //   this.proId = true;
+        // }
       },
       error: (err) => {
         console.log(err);

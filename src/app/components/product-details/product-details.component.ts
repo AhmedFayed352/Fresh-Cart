@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
 import { CartService } from 'src/app/services/cart.service';
@@ -44,7 +45,7 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
     nav: false
   }
 
-  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService){}
+  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService , private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(
@@ -65,8 +66,14 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
   addItemToCart() {
     if(this.productId != null) {
       this.arr.push(this._CartService.addToCart(this.productId).subscribe({
-        next: (response) => {response},
-        error: (err) => {console.log(err)}
+        next: (response) => {
+          response
+          this.toastr.success('Added To WishList' ,'Successfully');
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Something Went Wrong" ,'Error');
+        }
       }));
     }
   }
