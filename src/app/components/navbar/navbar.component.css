@@ -1,10 +1,29 @@
 .navbar-nav .nav-link.active {
-    color: #0aad0a;
+  color: #0aad0a;
 }
-
+.nav-link {
+  position: relative;
+}
+.nav-link:hover {
+  color: #0aad0a;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 8px;
+  width: 0px;
+  height: 2px;
+  background: #0aad0a;
+  transition: width 400ms;
+}
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: calc(100% - 16px);
+}
 .fs-small {
-    font-size: 10px;
+  font-size: 10px;
 }
-.fs-large { 
-    font-size: 20px;
+.fs-large {
+  font-size: 20px;
 }

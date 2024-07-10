@@ -1,5 +1,5 @@
 <div class="w-50 mx-auto my-4">
-  <h4>Register Now:</h4>
+  <h4 class="text-center text-main fw-bold">Registeration Form</h4>
   <p class="alert alert-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
   <form [formGroup]="registerForm" (ngSubmit)="handleRegister()">
     <label for="name" class="mt-1">name:</label>
@@ -42,4 +42,5 @@
       </button>
     </div>
   </form>
+  <p class="text-center m-0 mt-2">Account Already Exists? <a routerLink="/login" class="text-decoration-underline">SignIn</a></p>
 </div>

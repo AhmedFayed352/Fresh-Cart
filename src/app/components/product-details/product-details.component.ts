@@ -67,7 +67,7 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
     if(this.productId != null) {
       this.arr.push(this._CartService.addToCart(this.productId).subscribe({
         next: (response) => {
-          response
+          this._CartService.cartItemsNum.next(response.numOfCartItems);
           this.toastr.success('Added To WishList' ,'Successfully');
         },
         error: (err) => {

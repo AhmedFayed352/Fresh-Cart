@@ -14,11 +14,17 @@ export class LoaderInterceptor implements HttpInterceptor {
   constructor(private loader:LoaderService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.loader.showLoader();
-    return next.handle(request).pipe(
-      finalize(
-        () => this.loader.hideLoader()
-      )
-    );
+    
+    let clonedRequest = request.clone();
+    if(!clonedRequest.url.includes("cart") && !clonedRequest.url.includes("wishlist")) {
+      this.loader.showLoader();
+      return next.handle(clonedRequest).pipe(
+        finalize(
+          () => this.loader.hideLoader()
+        )
+      );
+    }
+
+    return next.handle(request);
   }
 }
