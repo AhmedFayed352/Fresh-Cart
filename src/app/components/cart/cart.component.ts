@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ICart } from 'src/app/interfaces/icart';
 import { CartService } from 'src/app/services/cart.service';
@@ -14,7 +15,7 @@ export class CartComponent implements OnInit, OnDestroy{
   isExist:boolean = false;
   arr: Subscription[] = [];
 
-  constructor(private _CartService: CartService){}
+  constructor(private _CartService: CartService , private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.arr.push(this._CartService.getUserCart().subscribe({
@@ -36,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy{
         if(response.numOfCartItems == 0) {
         this.isExist = true;
         }
+        this.toastr.success("Removed From your Cart" , "Successfully");
       },
       error: (err) => {
         console.log(err);
@@ -48,6 +50,7 @@ export class CartComponent implements OnInit, OnDestroy{
       this.arr.push(this._CartService.updateCartItem(id,count).subscribe({
         next: (response) => {
           this.cartItems = response.data;
+          this.toastr.info("Product Quantity Updated" , "Info");
         },
         error: (err) => {
           console.log(err)
@@ -64,6 +67,7 @@ export class CartComponent implements OnInit, OnDestroy{
       next: (response) => {
         this._CartService.cartItemsNum.next(0);
         this.isExist = true;
+        this.toastr.success("Cleared" , "Successfully");
       },
       error: (err) => {
         console.log(err);

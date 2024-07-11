@@ -16,7 +16,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
   isExist:boolean = false;
   arr: Subscription[] = [];
 
-  constructor(private _WishlistService: WishlistService , private _CartService: CartService , private _toastr:ToastrService){}
+  constructor(private _WishlistService: WishlistService , private _CartService: CartService , private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.displayWishlistItems();
@@ -45,6 +45,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
         }
         this._WishlistService.wishItemsNum.next(response.data.length);
         this.displayWishlistItems();
+        this.toastr.success("Removed From your Wishlist" , "Successfully");
       },
       error: (err) => {
         console.log(err);
@@ -56,7 +57,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
     this._CartService.addToCart(id).subscribe({
       next: (response) => {
         this._CartService.cartItemsNum.next(response.numOfCartItems);
-        this._toastr.success("Added to Cart" , "Successfully");
+        this.toastr.success("Added to Cart" , "Successfully");
       },
       error: (err) => {console.log(err)}
     })

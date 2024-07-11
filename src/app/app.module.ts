@@ -79,9 +79,11 @@ import { LoaderInterceptor } from './Interceptors/loader.interceptor';
     CarouselModule,
     FormsModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
-      preventDuplicates: true
+      closeButton: true,
+      progressBar: true,
+      progressAnimation: "increasing"
     })
   ],
   providers: [
