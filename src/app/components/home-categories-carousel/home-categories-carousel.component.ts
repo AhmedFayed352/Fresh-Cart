@@ -20,7 +20,17 @@ export class HomeCategoriesCarouselComponent implements OnInit , OnDestroy {
     dots: true,
     navSpeed: 700,
     navText: ['', ''],
-    items: 7,
+    responsive: {
+      400: {
+        items: 3
+      },
+      740: {
+        items: 5
+      },
+      940: {
+        items: 7
+      }
+    },
     nav: false,
     autoplay:true,
     autoplayHoverPause:true

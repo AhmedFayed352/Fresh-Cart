@@ -45,7 +45,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
         }
         this._WishlistService.wishItemsNum.next(response.data.length);
         this.displayWishlistItems();
-        this.toastr.success("Removed From your Wishlist" , "Successfully");
+        this.toastr.success("Removed From Wishlist" , "Successfully");
       },
       error: (err) => {
         console.log(err);
@@ -54,13 +54,14 @@ export class WishlistComponent implements OnInit , OnDestroy{
   }
 
   addItemToCart(id: string) {
-    this._CartService.addToCart(id).subscribe({
+    this.arr.push(this._CartService.addToCart(id).subscribe({
       next: (response) => {
         this._CartService.cartItemsNum.next(response.numOfCartItems);
         this.toastr.success("Added to Cart" , "Successfully");
+        this.removeWishlistItem(id);
       },
       error: (err) => {console.log(err)}
-    })
+    }));
   }
 
   ngOnDestroy(): void {

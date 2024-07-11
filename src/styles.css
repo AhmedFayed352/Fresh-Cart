@@ -45,6 +45,12 @@ a:hover {
 .font-xsm {
   font-size: 13px;
 }
+.fs-small {
+  font-size: 10px;
+}
+.fs-large {
+  font-size: 20px;
+}
 .text-main {
   color: var(--main-color);
 }

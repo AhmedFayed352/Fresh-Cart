@@ -3,6 +3,7 @@
 }
 .nav-link {
   position: relative;
+  text-align: center;
 }
 .nav-link:hover {
   color: #0aad0a;
@@ -17,13 +18,10 @@
   background: #0aad0a;
   transition: width 400ms;
 }
-.nav-link:hover::before,
-.nav-link.active::before {
-  width: calc(100% - 16px);
-}
-.fs-small {
-  font-size: 10px;
-}
-.fs-large {
-  font-size: 20px;
+
+@media (min-width: 1200px) {
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    width: calc(100% - 16px);
+  }
 }

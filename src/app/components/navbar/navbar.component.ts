@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit , OnDestroy{
   isLoggedUser:boolean = false;
   numOfCartItems:number = 0;
   numOfWishlistItems:number = 0;
-  unDestroying?: Subscription;
+  arr: Subscription[] = [];
 
   constructor(private _AuthService: AuthService , private _Router: Router , private _CartService:CartService , private _WishlistService: WishlistService){}
 
@@ -25,26 +25,26 @@ export class NavbarComponent implements OnInit , OnDestroy{
     this._AuthService.isLoggedInSubject.next(false);
   }
   ngOnInit() {
-    this.unDestroying = this._AuthService.isLoggedInSubject.subscribe(
+    this.arr.push(this._AuthService.isLoggedInSubject.subscribe(
       (islogged) => {this.isLoggedUser = islogged}
-    );
+    ));
 
-    this._CartService.cartItemsNum.subscribe({
+    this.arr.push(this._CartService.cartItemsNum.subscribe({
       next: (nums) => {
         this.numOfCartItems = nums;
       }
-    });
+    }));
 
-    this._WishlistService.wishItemsNum.subscribe({
+    this.arr.push(this._WishlistService.wishItemsNum.subscribe({
       next: (nums) => {
         this.numOfWishlistItems = nums;
       }
-    })
+    }));
   }
 
   ngOnDestroy(): void {
-    if(this.unDestroying != undefined) {
-      this.unDestroying.unsubscribe();
+    for(let i =0; i<this.arr.length; i++) {
+      this.arr[i].unsubscribe();
     }
   }
 }
