@@ -23,6 +23,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
-    <p class="text-center text-black m-0">No WishList Items Found.</p>
+<div *ngIf="isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5 text-center">
+    <p class="text-black">No WishList Items Found.</p>
+    <button class="btn bg-danger text-white" routerLink="/products">Browse Our Products</button>
 </div>

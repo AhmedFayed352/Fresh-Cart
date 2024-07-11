@@ -16,7 +16,7 @@
       <button (click)="addItemToCart(product._id)" class="btn bg-main text-white mt-3"><i class="fa-solid fa-plus"></i> AddToCart</button>
     </div>
     <div>
-      <i (click)="addToWishList(product._id)" class="fa-regular fa-heart mt-4 text-danger cursor-pointer heartico"></i>
+      <i (click)="addToWishList(product._id)" class="fa-heart mt-4 text-danger cursor-pointer heartico" [class]="isWishListProduct(product._id)?'fas':'fa-regular'"></i>
     </div>
   </div>
 </div>

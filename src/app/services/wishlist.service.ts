@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IProduct } from '../interfaces/iproduct';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class WishlistService {
 
   wishItemsNum = new BehaviorSubject<number>(0);
+  WishListProductsId = new BehaviorSubject<string[]>([])
 
   constructor(private _HttpClient:HttpClient) { 
     this.getUserWishList().subscribe({
       next: (response) => {
         this.wishItemsNum.next(response.count);
+        this.WishListProductsId.next((response.data as IProduct[]).map((product) => product._id));
       },
       error: (err) => {
         if(err.status == 404) {

@@ -28,11 +28,18 @@
                   <span class="fw-bold font-sm">{{ productDetails?.ratingsAverage }}</span>
                 </div>
             </div>
-            <button (click)="addItemToCart()" class="btn bg-main w-100 text-white mt-3">
-                <span class="font-sm">
-                  <i class="fa-solid fa-plus"></i> Add To Cart
-                </span>
-            </button>
+            <div class="d-flex justify-content-between mt-3">
+                <button (click)="addItemToCart()" class="btn bg-main text-white me-5 flex-grow-1">
+                    <span class="font-sm">
+                      <i class="fa-solid fa-shopping-cart"></i> Add To Cart
+                    </span>
+                </button>
+                <button (click)="addToWishlist()" class="btn bg-danger text-white flex-grow-1">
+                    <span class="font-sm">
+                      <i class="fa-solid fa-heart"></i> Add To Wishlist
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

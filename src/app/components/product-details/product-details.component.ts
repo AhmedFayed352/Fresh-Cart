@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -45,7 +46,7 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
     nav: false
   }
 
-  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService , private toastr:ToastrService){}
+  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService , private _WishlistService:WishlistService , private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(
@@ -68,13 +69,29 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
       this.arr.push(this._CartService.addToCart(this.productId).subscribe({
         next: (response) => {
           this._CartService.cartItemsNum.next(response.numOfCartItems);
-          this.toastr.success('Added To WishList' ,'Successfully');
+          this.toastr.success('Added To Cart' ,'Successfully');
         },
         error: (err) => {
           console.log(err);
           this.toastr.error("Something Went Wrong" ,'Error');
         }
       }));
+    }
+  }
+
+  addToWishlist() {
+    if(this.productId != null) {
+      this.arr.push(this._WishlistService.addToWishList(this.productId).subscribe({
+        next: (response) => {
+          console.log(response);
+          this._WishlistService.wishItemsNum.next(response.data.length);
+          this.toastr.success('Added To WishList' ,'Successfully');
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Something Went Wrong" , "Error");
+        }
+      }))
     }
   }
 

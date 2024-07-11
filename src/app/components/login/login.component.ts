@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Subscription } from 'rxjs';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { IProduct } from 'src/app/interfaces/iproduct';
 
 @Component({
   selector: 'app-login',
@@ -46,6 +47,7 @@ export class LoginComponent implements OnDestroy{
             this._WishlistService.getUserWishList().subscribe({
               next: (response) => {
                 this._WishlistService.wishItemsNum.next(response.count);
+                this._WishlistService.WishListProductsId.next((response.data as IProduct[]).map((product) => product._id));
               },
               error: (err) => {
                 this._WishlistService.wishItemsNum.next(0);

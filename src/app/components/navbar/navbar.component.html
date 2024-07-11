@@ -32,10 +32,10 @@
           <i class="fa-brands fa-youtube mx-2"></i>
         </li>
         <li *ngIf="!isLoggedUser" class="nav-item">
-          <a class="nav-link" routerLink="login">Login</a>
+          <a class="nav-link" routerLink="login" routerLinkActive="active">Login</a>
         </li>
         <li *ngIf="!isLoggedUser" class="nav-item">
-          <a class="nav-link" routerLink="register">Register</a>
+          <a class="nav-link" routerLink="register" routerLinkActive="active">Register</a>
         </li>
         <li *ngIf="isLoggedUser" class="nav-item">
           <a routerLink="/cart" class="nav-link cursor-pointer position-relative">

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/iproduct';
@@ -10,12 +10,16 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnDestroy{
+export class ProductComponent implements OnInit , OnDestroy{
   @Input() product!: IProduct;
   arr:Subscription[] = [];
-  // proId:boolean = false;
+  wishListProductsIdsList : string[] = [];
 
   constructor(private _CartService:CartService, private _WishlistService:WishlistService , private toastr:ToastrService){}
+
+  ngOnInit(): void {
+    this._WishlistService.WishListProductsId.subscribe((idsList) => {this.wishListProductsIdsList = idsList})
+  }
 
   addItemToCart(id:string) {
     this.arr.push(this._CartService.addToCart(id).subscribe({
@@ -35,15 +39,17 @@ export class ProductComponent implements OnDestroy{
       next: (response) => {
         this._WishlistService.wishItemsNum.next(response.data.length);
         this.toastr.success('Added To WishList' ,'Successfully');
-        // if(response.data.includes(id)) {
-        //   this.proId = true;
-        // }
+        this._WishlistService.WishListProductsId.next(response.data);
       },
       error: (err) => {
         console.log(err);
         this.toastr.error("Something Went Wrong" ,'Error');
       }
     }));
+  }
+
+  isWishListProduct(id:string) {
+    return this.wishListProductsIdsList.includes(id);
   }
 
   ngOnDestroy(): void {

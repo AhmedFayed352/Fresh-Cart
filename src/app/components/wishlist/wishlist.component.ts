@@ -44,6 +44,7 @@ export class WishlistComponent implements OnInit , OnDestroy{
           this.isExist = true;
         }
         this._WishlistService.wishItemsNum.next(response.data.length);
+        this._WishlistService.WishListProductsId.next(response.data);
         this.displayWishlistItems();
         this.toastr.success("Removed From Wishlist" , "Successfully");
       },
