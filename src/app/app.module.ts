@@ -37,6 +37,8 @@ import { SearchPipe } from './Pipes/search.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderInterceptor } from './Interceptors/loader.interceptor';
+import { OrderItemsComponent } from './components/order-items/order-items.component';
+import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { LoaderInterceptor } from './Interceptors/loader.interceptor';
     AddpricePipe,
     TitleSlicePipe,
     SearchPipe,
-    LoaderComponent
+    LoaderComponent,
+    OrderItemsComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +84,7 @@ import { LoaderInterceptor } from './Interceptors/loader.interceptor';
     FormsModule,
     ToastrModule.forRoot({
       timeOut: 2000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-left',
       closeButton: true,
       progressBar: true,
       progressAnimation: "increasing"

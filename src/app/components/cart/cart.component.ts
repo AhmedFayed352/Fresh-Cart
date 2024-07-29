@@ -50,7 +50,6 @@ export class CartComponent implements OnInit, OnDestroy{
       this.arr.push(this._CartService.updateCartItem(id,count).subscribe({
         next: (response) => {
           this.cartItems = response.data;
-          this.toastr.info("Product Quantity Updated" , "Info");
         },
         error: (err) => {
           console.log(err)

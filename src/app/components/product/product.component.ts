@@ -10,50 +10,65 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit , OnDestroy{
+export class ProductComponent implements OnInit, OnDestroy {
   @Input() product!: IProduct;
-  arr:Subscription[] = [];
-  wishListProductsIdsList : string[] = [];
+  arr: Subscription[] = [];
+  wishListProductsIdsList: string[] = [];
 
-  constructor(private _CartService:CartService, private _WishlistService:WishlistService , private toastr:ToastrService){}
+  constructor(private _CartService: CartService, private _WishlistService: WishlistService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this._WishlistService.WishListProductsId.subscribe((idsList) => {this.wishListProductsIdsList = idsList})
+    this.arr.push(this._WishlistService.WishListProductsId.subscribe((idsList) => { this.wishListProductsIdsList = idsList }));
   }
 
-  addItemToCart(id:string) {
+  addItemToCart(id: string) {
     this.arr.push(this._CartService.addToCart(id).subscribe({
       next: (response) => {
         this._CartService.cartItemsNum.next(response.numOfCartItems);
-        this.toastr.success('Added To Cart' , 'Successfully');
+        this.toastr.success('Added To Cart', 'Successfully');
       },
       error: (err) => {
         console.log(err);
-        this.toastr.error("Something Went Wrong" ,'Error');
+        this.toastr.error("Something Went Wrong", 'Error');
       }
     }));
   }
 
   addToWishList(id: string) {
-    this.arr.push(this._WishlistService.addToWishList(id).subscribe({
-      next: (response) => {
-        this._WishlistService.wishItemsNum.next(response.data.length);
-        this.toastr.success('Added To WishList' ,'Successfully');
-        this._WishlistService.WishListProductsId.next(response.data);
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastr.error("Something Went Wrong" ,'Error');
-      }
-    }));
+    if (!this.wishListProductsIdsList.includes(id)) {
+      this.arr.push(this._WishlistService.addToWishList(id).subscribe({
+        next: (response) => {
+          this._WishlistService.wishItemsNum.next(response.data.length);
+          this.toastr.success('Added To WishList', 'Successfully');
+          this._WishlistService.WishListProductsId.next(response.data);
+          console.log(this.wishListProductsIdsList);
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Something Went Wrong", 'Error');
+        }
+      }));
+    } else {
+      this.arr.push(this._WishlistService.removeWithlistItem(id).subscribe({
+        next: (response) => {
+          this._WishlistService.wishItemsNum.next(response.data.length);
+          this.toastr.success('Removed From WishList', 'Successfully');
+          this._WishlistService.WishListProductsId.next(response.data);
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Something Went Wrong", 'Error');
+        }
+      }))
+    }
   }
 
-  isWishListProduct(id:string) {
+  isWishListProduct(id: string) {
     return this.wishListProductsIdsList.includes(id);
   }
 
   ngOnDestroy(): void {
-    for(let i =0; i<this.arr.length; i++) {
+    for (let i = 0; i < this.arr.length; i++) {
       this.arr[i].unsubscribe();
     }
   }

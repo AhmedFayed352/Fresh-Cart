@@ -34,11 +34,9 @@
                       <i class="fa-solid fa-shopping-cart"></i> Add To Cart
                     </span>
                 </button>
-                <button (click)="addToWishlist()" class="btn bg-danger text-white flex-grow-1">
-                    <span class="font-sm">
-                      <i class="fa-solid fa-heart"></i> Add To Wishlist
-                    </span>
-                </button>
+                <div class="w-25 d-flex justify-content-center align-items-center">
+                    <i (click)="addToWishlist()" class="fa-heart fs-4 text-danger cursor-pointer heartico" [class]="isWishListProduct(productDetails?._id)?'fas':'fa-regular'"></i>
+                </div>
             </div>
         </div>
     </div>

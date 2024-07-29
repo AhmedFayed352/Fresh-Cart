@@ -1,1 +1,21 @@
-<p>orders works!</p>
+<div *ngIf="!isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5">
+    <h4 class="my-3 fw-bold border-bottom pb-3">My Orders</h4>
+    <table class="table table-responsive text-center">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Payment Method Type</th>
+                <th scope="col">Total Order Price</th>
+                <th scope="col">View Order Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of allOrders">
+                <th scope="row">{{order.id}}</th>
+                <td>{{order.paymentMethodType}}</td>
+                <td>{{order.totalOrderPrice}}</td>
+                <td><button (click)="showOrderItems(order.id)" class="btn text-decoration-underline p-0">View</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

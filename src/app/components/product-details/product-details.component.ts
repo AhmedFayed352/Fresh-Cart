@@ -13,11 +13,12 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit , OnDestroy{
+export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   productId: string | null = null;
   productDetails?: IProduct;
-  arr:Subscription[] =[];
+  wishListProductsIdsList: string[] = [];
+  arr: Subscription[] = [];
 
   customOptions: OwlOptions = {
     loop: true,
@@ -25,7 +26,7 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
     touchDrag: false,
     pullDrag: false,
     dots: true,
-    autoplay:true,
+    autoplay: true,
     autoplayHoverPause: true,
     navSpeed: 700,
     navText: ['', ''],
@@ -46,57 +47,76 @@ export class ProductDetailsComponent implements OnInit , OnDestroy{
     nav: false
   }
 
-  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService , private _CartService:CartService , private _WishlistService:WishlistService , private toastr:ToastrService){}
+  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService, private _CartService: CartService, private _WishlistService: WishlistService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(
-      (params) =>{
+      (params) => {
         this.productId = params.get('id');
-    }));
+      }));
 
-    if(this.productId != null) {
+    if (this.productId != null) {
       this.arr.push(this._ProductService.getProductDetailsById(this.productId).subscribe({
         next: (response) => {
           this.productDetails = response.data;
         },
-        error: (err) => {console.log(err)}
+        error: (err) => { console.log(err) }
       }));
     }
+    this._WishlistService.WishListProductsId.subscribe((idsList) => { this.wishListProductsIdsList = idsList })
   }
 
   addItemToCart() {
-    if(this.productId != null) {
+    if (this.productId != null) {
       this.arr.push(this._CartService.addToCart(this.productId).subscribe({
         next: (response) => {
           this._CartService.cartItemsNum.next(response.numOfCartItems);
-          this.toastr.success('Added To Cart' ,'Successfully');
+          this.toastr.success('Added To Cart', 'Successfully');
         },
         error: (err) => {
           console.log(err);
-          this.toastr.error("Something Went Wrong" ,'Error');
+          this.toastr.error("Something Went Wrong", 'Error');
         }
       }));
     }
   }
 
   addToWishlist() {
-    if(this.productId != null) {
-      this.arr.push(this._WishlistService.addToWishList(this.productId).subscribe({
-        next: (response) => {
-          console.log(response);
-          this._WishlistService.wishItemsNum.next(response.data.length);
-          this.toastr.success('Added To WishList' ,'Successfully');
-        },
-        error: (err) => {
-          console.log(err);
-          this.toastr.error("Something Went Wrong" , "Error");
-        }
-      }))
+    if (this.productId != null) {
+    if(!this.wishListProductsIdsList.includes(this.productId)) {
+        this.arr.push(this._WishlistService.addToWishList(this.productId).subscribe({
+          next: (response) => {
+            this._WishlistService.wishItemsNum.next(response.data.length);
+            this.toastr.success('Added To WishList', 'Successfully');
+            this._WishlistService.WishListProductsId.next(response.data);
+          },
+          error: (err) => {
+            console.log(err);
+            this.toastr.error("Something Went Wrong", "Error");
+          }
+        }));
+      } else {
+        this.arr.push(this._WishlistService.removeWithlistItem(this.productId).subscribe({
+          next: (response) => {
+            this._WishlistService.wishItemsNum.next(response.data.length);
+            this.toastr.success('Removed From WishList', 'Successfully');
+            this._WishlistService.WishListProductsId.next(response.data);
+          },
+          error: (err) => {
+            console.log(err);
+            this.toastr.error("Something Went Wrong", 'Error');
+          }
+        }))
+      }
     }
   }
 
+  isWishListProduct(id?: string) {
+    return this.wishListProductsIdsList.includes(`${id}`);
+  }
+
   ngOnDestroy(): void {
-    for(let i =0; i<this.arr.length; i++) {
+    for (let i = 0; i < this.arr.length; i++) {
       this.arr[i].unsubscribe();
     }
   }

@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
+import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
   selector: 'app-shipping-address',
@@ -21,7 +22,7 @@ export class ShippingAddressComponent implements OnInit , OnDestroy{
     city: new FormControl(null , Validators.required)
   });
 
-  constructor(private _CartService:CartService , private _ActivatedRoute:ActivatedRoute){}
+  constructor( private _ActivatedRoute:ActivatedRoute , private _OrdersService:OrdersService , private _Router:Router , private _CartService: CartService){}
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(
@@ -35,13 +36,26 @@ export class ShippingAddressComponent implements OnInit , OnDestroy{
     window.location.href = url;
   }
 
-  handleshippingAddress(form : FormGroup) {
-    this.arr.push(this._CartService.onlinePayment(this.cartId , form.value).subscribe({
+  onlinePayment(form : FormGroup) {
+    this.arr.push(this._OrdersService.onlinePayment(this.cartId , form.value).subscribe({
       next: (response) => {
         this.redirectToPaymentPage(response.session.url);
       },
       error: (err) => {console.log(err)}
     }));
+  }
+
+  cashPayment(form : FormGroup){
+    this.arr.push(this._OrdersService.cashPayment(this.cartId , form.value).subscribe({
+      next: (response) => {
+        console.log(response);
+        this._Router.navigate(["/allorders"]);
+        this._CartService.cartItemsNum.next(0);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    }))
   }
 
   ngOnDestroy(): void {
