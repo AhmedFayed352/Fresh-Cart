@@ -18,7 +18,10 @@ export class LoginComponent implements OnDestroy {
   isLoading: boolean = false;
   arr: Subscription[] = [];
 
-  constructor(private _AuthService: AuthService, private _Router: Router, private _CartService: CartService, private _WishlistService: WishlistService) {
+  constructor(private _AuthService: AuthService, 
+              private _Router: Router, 
+              private _CartService: CartService, 
+              private _WishlistService: WishlistService) {
 
   }
 

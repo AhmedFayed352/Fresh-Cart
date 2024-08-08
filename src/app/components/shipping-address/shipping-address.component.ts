@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -22,7 +23,11 @@ export class ShippingAddressComponent implements OnInit , OnDestroy{
     city: new FormControl(null , Validators.required)
   });
 
-  constructor( private _ActivatedRoute:ActivatedRoute , private _OrdersService:OrdersService , private _Router:Router , private _CartService: CartService){}
+  constructor( private _ActivatedRoute:ActivatedRoute ,
+               private _OrdersService:OrdersService ,
+               private _Router:Router ,
+               private _CartService: CartService ,
+               private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(
@@ -54,6 +59,9 @@ export class ShippingAddressComponent implements OnInit , OnDestroy{
       },
       error: (err) => {
         console.log(err);
+        if(err.status == 404) {
+          this.toastr.error(`${err.error.message}` , "Bad Request");
+        }
       }
     }))
   }

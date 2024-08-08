@@ -16,7 +16,9 @@ export class WishlistComponent implements OnInit , OnDestroy{
   isExist:boolean = false;
   arr: Subscription[] = [];
 
-  constructor(private _WishlistService: WishlistService , private _CartService: CartService , private toastr:ToastrService){}
+  constructor(private _WishlistService: WishlistService, 
+              private _CartService: CartService, 
+              private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.displayWishlistItems();

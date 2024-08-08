@@ -15,7 +15,9 @@ export class ProductComponent implements OnInit, OnDestroy {
   arr: Subscription[] = [];
   wishListProductsIdsList: string[] = [];
 
-  constructor(private _CartService: CartService, private _WishlistService: WishlistService, private toastr: ToastrService) { }
+  constructor(private _CartService: CartService, 
+              private _WishlistService: WishlistService, 
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.arr.push(this._WishlistService.WishListProductsId.subscribe((idsList) => { this.wishListProductsIdsList = idsList }));

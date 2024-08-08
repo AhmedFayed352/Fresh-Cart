@@ -16,7 +16,9 @@ export class ProductBrandComponent implements OnInit, OnDestroy{
   allProducts: IProduct[] = [];
   arr: Subscription[] = [];
 
-  constructor(private _ActivatedRoute: ActivatedRoute , private _ProductService:ProductService , private _CartService:CartService){}
+  constructor(private _ActivatedRoute: ActivatedRoute, 
+              private _ProductService:ProductService, 
+              private _CartService:CartService){}
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(

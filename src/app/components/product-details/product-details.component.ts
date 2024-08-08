@@ -47,7 +47,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     nav: false
   }
 
-  constructor(private _ActivatedRoute: ActivatedRoute, private _ProductService: ProductService, private _CartService: CartService, private _WishlistService: WishlistService, private toastr: ToastrService) { }
+  constructor(private _ActivatedRoute: ActivatedRoute, 
+              private _ProductService: ProductService, 
+              private _CartService: CartService, 
+              private _WishlistService: WishlistService, 
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.arr.push(this._ActivatedRoute.paramMap.subscribe(

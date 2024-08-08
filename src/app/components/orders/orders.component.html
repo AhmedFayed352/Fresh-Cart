@@ -14,8 +14,15 @@
                 <th scope="row">{{order.id}}</th>
                 <td>{{order.paymentMethodType}}</td>
                 <td>{{order.totalOrderPrice}}</td>
-                <td><button (click)="showOrderItems(order.id)" class="btn text-decoration-underline p-0">View</button></td>
+                <td><button (click)="selectUserOrder(order.id)" class="btn text-decoration-underline p-0">View</button></td>
             </tr>
         </tbody>
     </table>
+    <hr>
+    <!-- <app-order-items [userOrder]="userOrder"></app-order-items> -->
+</div>
+
+<div *ngIf="isExist" class="container bg-main-light p-4 border shadow-sm rounded my-5 text-center">
+    <p class="text-black">No Orders Found.</p>
+    <button class="btn bg-main text-white" routerLink="/products">Browse Our Products And Make Your First Order</button>
 </div>

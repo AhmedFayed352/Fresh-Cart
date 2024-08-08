@@ -1,7 +1,7 @@
-<div class="w-50 mx-auto my-4">
-    <h4>Verify Your Password Code:</h4>
+<div class="for-forms mx-auto my-4">
+    <h4 class="fw-bold text-main text-center">Verify Your Password Code</h4>
     <p class="alert alert-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
-    <p class="mb-0 mt-2 text-secondary font-sm">Please enter your email address below. We will send you a verification code to reset your password.</p>
+    <p class="mb-0 mt-2 text-secondary font-sm">We Have Send You a Reset Code To Verify Your Password, Please Enter It Down There.</p>
     <form [formGroup]="verifyPasswordForm" (ngSubmit)="handleVerifyPasswordCode(verifyPasswordForm)">
         <label for="resetCode" class="mt-2">reset code:</label>
         <input type="text" name="resetCode" id="resetCode" class="form-control" formControlName="resetCode" autocomplete="off">
