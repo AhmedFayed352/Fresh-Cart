@@ -43,7 +43,6 @@ export class ProductComponent implements OnInit, OnDestroy {
           this._WishlistService.wishItemsNum.next(response.data.length);
           this.toastr.success('Added To WishList', 'Successfully');
           this._WishlistService.WishListProductsId.next(response.data);
-          console.log(this.wishListProductsIdsList);
         },
         error: (err) => {
           console.log(err);

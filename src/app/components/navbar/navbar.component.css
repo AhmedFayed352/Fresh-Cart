@@ -18,9 +18,40 @@
   background: #0aad0a;
   transition: width 400ms;
 }
+
+.drop span {
+  padding: 10px 15px;
+  border-radius: 50%;
+}
+
+.drop-content {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: -100%;
+  background-color: #f9f9f9;
+  width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.drop-content * {
+  display: block;
+  padding-block: 10px;
+}
+
+.drop:hover .drop-content {
+  display: block;
+}
+
 @media (min-width: 992px) {
   .for-icons {
     flex-direction: row !important;
+  }
+  .drop-content {
+    left:-80px;
+    top: 100%;
   }
 }
 @media (min-width: 1200px) {

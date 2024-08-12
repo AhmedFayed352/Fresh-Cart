@@ -21,25 +21,26 @@ import { ShippingAddressComponent } from './components/shipping-address/shipping
 import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', canActivate: [authGuard], component: HomeComponent},
-  {path: 'cart', canActivate: [authGuard], component: CartComponent},
-  {path: 'products', canActivate: [authGuard], component: ProductsComponent},
-  {path: 'categories', canActivate: [authGuard], component: CategoriesComponent},
-  {path: 'brands', canActivate: [authGuard], component: BrandsComponent},
-  {path: 'wishlist', canActivate: [authGuard], component: WishlistComponent},
-  {path: 'allorders', canActivate: [authGuard], component: OrdersComponent},
-  {path: 'product/:id', canActivate: [authGuard], component: ProductDetailsComponent},
-  {path: 'category/:categoryId', canActivate: [authGuard], component: ProductCategoryComponent},
-  {path: 'shippingAddress/:cartId', canActivate: [authGuard], component: ShippingAddressComponent},
-  {path: 'brand/:brandId', canActivate: [authGuard], component: ProductBrandComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', canActivate: [authGuard], component: HomeComponent },
+  { path: 'cart', canActivate: [authGuard], component: CartComponent },
+  { path: 'products', canActivate: [authGuard], component: ProductsComponent },
+  { path: 'categories', canActivate: [authGuard], component: CategoriesComponent },
+  { path: 'brands', canActivate: [authGuard], component: BrandsComponent },
+  { path: 'wishlist', canActivate: [authGuard], component: WishlistComponent },
+  { path: 'allorders', canActivate: [authGuard], component: OrdersComponent },
+  { path: 'product/:id', canActivate: [authGuard], component: ProductDetailsComponent },
+  { path: 'category/:categoryId', canActivate: [authGuard], component: ProductCategoryComponent },
+  { path: 'shippingAddress/:cartId', canActivate: [authGuard], component: ShippingAddressComponent },
+  { path: 'brand/:brandId', canActivate: [authGuard], component: ProductBrandComponent },
+  { path: 'settings', canActivate: [authGuard], loadChildren: () => (import("./settings/settings.module").then((m) => m.SettingsModule)) },
 
-  {path: 'login', canActivate: [noAuthGuard], component: LoginComponent},
-  {path: 'register', canActivate: [noAuthGuard], component: RegisterComponent},
-  {path: 'forget-password', canActivate: [noAuthGuard], component: ForgetPasswordComponent},
-  {path: 'verify-reset-code', canActivate: [noAuthGuard], component: VerifyResetCodeComponent},
-  {path: 'reset-password', canActivate: [noAuthGuard], component: ResetPasswordComponent},
-  {path: '**', component: NotfoundComponent}
+  { path: 'login', canActivate: [noAuthGuard], component: LoginComponent },
+  { path: 'register', canActivate: [noAuthGuard], component: RegisterComponent },
+  { path: 'forget-password', canActivate: [noAuthGuard], component: ForgetPasswordComponent },
+  { path: 'verify-reset-code', canActivate: [noAuthGuard], component: VerifyResetCodeComponent },
+  { path: 'reset-password', canActivate: [noAuthGuard], component: ResetPasswordComponent },
+  { path: '**', component: NotfoundComponent }
 ];
 
 @NgModule({

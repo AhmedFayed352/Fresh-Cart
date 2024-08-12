@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-8">
         <div class="p-5">
-            <h4 class="fw-bold">{{productDetails?.title}}</h4>
+            <h4 class="fw-bold">{{productDetails?.title|titleSlice:4}}</h4>
             <p class="my-3 font-sm">{{productDetails?.description}}</p>
             <span class="fw-bold font-sm text-main">{{productDetails?.category?.name}}</span>
             <div class="my-3">

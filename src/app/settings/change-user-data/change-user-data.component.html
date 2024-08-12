@@ -1,0 +1,35 @@
+<div class="for-forms mx-auto my-4">
+    <h4 class="text-center text-main fw-bold">Update User Data</h4>
+    <p class="alert alert-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
+    <form [formGroup]="changeUserDataForm" (ngSubmit)="handleChangeUserDataForm()">
+      <label for="name" class="mt-1">name:</label>
+      <input type="text" name="name" id="name" class="form-control" formControlName="name" autocomplete="off">
+      <div class="text-danger" *ngIf="changeUserDataForm.get('name')?.invalid && changeUserDataForm.get('name')?.dirty">
+        <p class="my-0" *ngIf="changeUserDataForm.get('name')?.getError('required')">name is required</p>
+        <p class="my-0" *ngIf="changeUserDataForm.get('name')?.getError('minlength')">name minimum lenght is 3</p>
+        <p class="my-0" *ngIf="changeUserDataForm.get('name')?.getError('maxlength')">name maximum lenght is 20</p>
+      </div>
+  
+      <label for="email" class="mt-2">email:</label>
+      <input type="email" name="email" id="email" class="form-control" formControlName="email" autocomplete="off">
+      <div class="text-danger" *ngIf="changeUserDataForm.get('email')?.invalid && changeUserDataForm.get('email')?.dirty">
+        <p class="my-0" *ngIf="changeUserDataForm.get('email')?.getError('required')">email is required</p>
+        <p class="my-0" *ngIf="changeUserDataForm.get('email')?.getError('email')">enter a valid email</p>
+      </div>
+  
+      <label for="phone" class="mt-2">phone:</label>
+      <input type="tel" name="phone" id="phone" class="form-control" formControlName="phone" autocomplete="off">
+      <div class="text-danger" *ngIf="changeUserDataForm.get('phone')?.invalid && changeUserDataForm.get('phone')?.dirty">
+        <p class="my-0" *ngIf="changeUserDataForm.get('phone')?.getError('required')">phone is required</p>
+        <p class="my-0" *ngIf="changeUserDataForm.get('phone')?.getError('pattern')">enter a valid egyptian phone number</p>
+      </div>
+  
+      <div class="d-flex justify-content-end">
+        <button class="btn bg-main text-light mt-3" [disabled]="changeUserDataForm.invalid || isLoading">
+          <span *ngIf="!isLoading">Update</span>
+          <span *ngIf="isLoading" class="fas fa-spinner fa-spin"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+  

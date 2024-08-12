@@ -23,9 +23,7 @@ export class NavbarComponent implements OnInit , OnDestroy{
               private _WishlistService: WishlistService){}
 
   logOut() {
-    localStorage.removeItem('token');
-    this._Router.navigate(['/login']);
-    this._AuthService.isLoggedInSubject.next(false);
+    this._AuthService.logOut();
   }
   ngOnInit() {
     this.arr.push(this._AuthService.isLoggedInSubject.subscribe(
